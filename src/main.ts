@@ -6,7 +6,7 @@ import { setupStore } from "./store";
 import { setupI18n } from "@/locales";
 import { setup } from "@/plugins/antd";
 import "./registerServiceWorker";
-import "./styles/common.css";
+import "./styles/index.less";
 import "./router/guard"
 
 if (window.__POWERED_BY_WUJIE__) {
