@@ -12,9 +12,8 @@
 </template>
 
 <script lang="ts">
-import Component from "vue-class-component";
-import { Vue } from "vue-property-decorator";
-@Component({
+import {Options,Vue} from "vue-class-component";
+@Options({
   components: {},
 })
 export default class Page501 extends Vue {

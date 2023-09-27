@@ -8,11 +8,11 @@ import { getLanguage } from "@/utils/clientStorage";
  * @returns {string}
  * @param meta
  */
-export default function getPageTitle(meta: RouteMeta) {
+export default function setPageTitle(meta: RouteMeta): string {
   const language = getLanguage();
   const pageTitle = language === "zh" ? meta.title : meta.englishTitle;
   let newTitles = ["PharmaBlock"];
-  if (pageTitle) newTitles.unshift(pageTitle);
+  if (pageTitle) newTitles.unshift(pageTitle as string);
   if (titleReverse) newTitles = newTitles.reverse();
   return newTitles.join(titleSeparator);
 }

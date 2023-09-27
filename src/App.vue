@@ -17,7 +17,7 @@
 import zhCN from "ant-design-vue/es/locale/zh_CN";
 import en from "ant-design-vue/es/locale/en_US";
 import { Options, Vue } from "vue-class-component";
-import { getLanguage } from "@/utils/language";
+import { getLanguage } from "@/utils/clientStorage";
 
 const lang = getLanguage();
 @Options({
@@ -26,7 +26,7 @@ const lang = getLanguage();
     $route: {
       handler() {
         // @ts-ignore
-        window.$wujie?.bus.$emit("sub-route-change", "pwp", this.$route.path);
+        window.$wujie?.bus.$emit("sub-route-change", "{{key}}", this.$route.path);
       },
       immediate: true,
       deep: true,

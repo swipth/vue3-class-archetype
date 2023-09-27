@@ -3,9 +3,9 @@
  * @Description:
 -->
 <script lang="ts">
-import {Vue, Component} from 'vue-property-decorator';
+import {Vue, Options} from 'vue-class-component';
 
-@Component({})
+@Options({})
 export default class Exception extends Vue {
 }
 </script>

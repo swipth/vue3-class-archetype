@@ -73,7 +73,6 @@ axios.interceptors.response.use(
 
     if (error.response && error.response.status === 401) {
       store.commit("user/logout");
-      const oldPath = (router.app as any)._route.fullPath;
       message.config({top: `200px`});
       message.warning({
         content: "退出提示",
@@ -82,7 +81,6 @@ axios.interceptors.response.use(
           router
             .push({
               path: "/auth/login",
-              query: {from: oldPath},
             })
             .then(() => {
             });
