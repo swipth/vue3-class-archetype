@@ -1,0 +1,21 @@
+#!/usr/bin/env sh
+
+. "$(dirname -- "$0")/_/husky.sh"
+
+# 获取当前提交的 ID
+commit_id=$(git rev-parse --verify HEAD)
+
+# 调用 commit-msg 钩子
+$(dirname -- "$0")/commit-msg .git/COMMIT_EDITMSG $commit_id
+
+# 格式化代码
+#npm run lint
+
+# 在执行 git add 命令之前，先执行你的脚本或命令
+#node "./version/update-number.js"
+
+# 执行 git add 命令
+# git add .
+git add package.json
+
+# npx lint-staged 直接执行也可以

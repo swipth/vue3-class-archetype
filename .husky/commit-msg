@@ -1,0 +1,20 @@
+#!/bin/sh
+
+commit_msg_file=$1
+# 校验两次 上一次消息 和本次消息
+commit_msg=$(cat $commit_msg_file)
+
+# 打印提交的消息信息
+#echo "$commit_msg"
+
+# 检查提交消息是否以 feat/fix/chore/docs/refactor/test/style 开头
+if ! echo "$commit_msg" | grep -qE "(feat|fix|chore|docs|refactor|test|style)"; then
+  echo "Error: Commit message should start with feat/fix/chore/docs/refactor/test/style"
+  exit 1
+fi
+
+# 检查提交消息是否包含 JIRA 编号  [A-Z]+-[0-9]+
+if ! echo "$commit_msg" | grep -qE "(JIRA:)"; then
+ echo "Error: Commit message should contain JIRA issue number"
+ #exit 1
+fi
