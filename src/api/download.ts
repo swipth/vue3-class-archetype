@@ -6,14 +6,13 @@
  *  downloadExcel()
  */
 import { Modal } from "ant-design-vue";
-import { ModalConfirm } from "ant-design-vue/types/modal";
 import axios, { AxiosResponse, Method } from "axios";
 import NProgress from "nprogress";
-import i18n from "@/locales/i18n";
+import {translateTitle} from "@/locales";
 import { AjaxRes } from "@/types/common";
 import { messageName } from "@/config/network";
 
-let modal: ModalConfirm;
+let modal: any;
 /**
  * 自定义axios下载
  * @param url
@@ -56,7 +55,7 @@ export const ajaxDownload = (url: string, params: Record<string, unknown> = {}, 
 };
 
 const fileDownload = (url: string, params: Record<string, unknown>, method: Method, data: Record<string, unknown>) => {
-  modal = Modal.info({ title: i18n.t("文件下载"), content: i18n.t("开始下载"), centered: true, okText: i18n.t("关闭") as string });
+  modal = Modal.info({ title: translateTitle("文件下载"), content: translateTitle("开始下载"), centered: true, okText: translateTitle("关闭") as string });
   // tips: 这里直接返回的是response整体!
   return axios({
     url,
@@ -74,7 +73,7 @@ const fileDownload = (url: string, params: Record<string, unknown>, method: Meth
         // 对原生进度事件的处理
         // parseInt((e.loaded / e.total) * 100) };
         // 下载完成
-        modal.update({ content: i18n.t("当前文件下载进度") + "：" + ((e.loaded / e.total) * 100).toFixed(2) + "%" });
+        modal.update({ content: translateTitle("当前文件下载进度") + "：" + ((e.loaded / e.total) * 100).toFixed(2) + "%" });
         if (e.loaded === e.total) {
           NProgress.set(e.loaded / e.total);
           modal.destroy();
@@ -92,7 +91,7 @@ const convertRes2Blob = async (response: AxiosResponse, name?: string) => {
   const responseJson: AjaxRes = await blobToObj(response.data);
   if (!responseJson.success) {
     Modal.error({
-      title: i18n.t("接口温馨提醒"),
+      title: translateTitle("接口温馨提醒"),
       content: responseJson[messageName] as string,
     });
     modal.destroy();

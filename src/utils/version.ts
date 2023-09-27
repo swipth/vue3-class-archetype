@@ -4,7 +4,7 @@ import { checkVersion } from "@/api/interface/version";
 const { currentVersion } = require("../../version/info");
 import { Modal } from "ant-design-vue";
 import { AjaxRes } from "@/types/common";
-import i18n from "@/locales/i18n";
+import {translateTitle} from "@/locales";
 import { getErrorModalNumber, removeErrorModalNumber, setErrorModalNumber } from "@/utils/clientStorage";
 import { showVersionModal } from "@/config/setting";
 
@@ -24,9 +24,9 @@ export function versionCheck(callback?: () => void) {
           if (!getErrorModalNumber()) {
             Modal.info({
               centered: true,
-              title: i18n.t("提示"),
-              content: i18n.t("系统发现新版本") + res.data.version + i18n.t("即将进行更新"),
-              okText: i18n.t("确定") as string,
+              title: translateTitle("提示"),
+              content: translateTitle("系统发现新版本") + res.data.version + translateTitle("即将进行更新"),
+              okText: translateTitle("确定") as string,
               onOk: refreshPage,
             });
           }

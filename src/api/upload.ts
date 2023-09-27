@@ -7,10 +7,9 @@
 import { Modal } from "ant-design-vue";
 import axios, { AxiosError, AxiosResponse, Method } from "axios";
 import NProgress from "nprogress";
-import i18n from "@/locales/i18n";
-import { ModalConfirm } from "ant-design-vue/types/modal";
+import {translateTitle} from "@/locales";
 
-let modal: ModalConfirm;
+let modal: any;
 /**
  * 自定义上传
  * @param url
@@ -23,7 +22,7 @@ export const ajaxUpload = (url: string, file: File, method: Method = "PUT") => {
   formData.append("file", file);
   return new Promise((resolve, reject) => {
     NProgress.start();
-    if (file.size > 10 * 1024 * 1024) modal = Modal.info({ title: i18n.t("文件上传"), content: i18n.t("开始上传"), centered: true, okText: i18n.t("关闭") as string });
+    if (file.size > 10 * 1024 * 1024) modal = Modal.info({ title: translateTitle("文件上传"), content: translateTitle("开始上传"), centered: true, okText: translateTitle("关闭") as string });
     axios({
       url,
       method,
@@ -33,7 +32,7 @@ export const ajaxUpload = (url: string, file: File, method: Method = "PUT") => {
       onUploadProgress(e) {
         if (e.lengthComputable) {
           // 文件大小大于10M 显示进度弹窗
-          if (file.size > 10 * 1024 * 1024) modal.update({ content: i18n.t("当前文件上传进度") + "：" + ((e.loaded / e.total) * 100).toFixed(2) + "%" });
+          if (file.size > 10 * 1024 * 1024) modal.update({ content: translateTitle("当前文件上传进度") + "：" + ((e.loaded / e.total) * 100).toFixed(2) + "%" });
           if (e.loaded === e.total) {
             NProgress.set(e.loaded / e.total);
             // modal.destroy()
@@ -51,7 +50,7 @@ export const ajaxUpload = (url: string, file: File, method: Method = "PUT") => {
         Modal.destroyAll();
         // modal.destroy();
         reject(err);
-        Modal.error({ content: i18n.t("文件上传失败"), centered: true });
+        Modal.error({ content: translateTitle("文件上传失败"), centered: true });
       });
   });
 };
