@@ -67,14 +67,6 @@ export default class AdminLayout extends Vue {
           <DesktopOutlined />
           <span>工作台</span>
         </a-menu-item>
-        <a-menu-item key="/account">
-          <CalendarOutlined />
-          <span>account</span>
-        </a-menu-item>
-        <a-menu-item key="/price">
-          <UserOutlined />
-          <span>price</span>
-        </a-menu-item>
         <a-menu-item key="/dictionaryType">
           <BarsOutlined />
           <span>数据字典(大类)</span>

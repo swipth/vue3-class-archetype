@@ -10,7 +10,17 @@ const commonRoutes: Array<RouteRecordRaw> = [
   {
     path: "/workbench",
     name: "Workbench",
-    component: () => import("../views/admin/portal/Workbench.vue"),
+    component: () => import(/* webpackChunkName: "Workbench" */ "../views/admin/portal/Workbench.vue"),
+  },
+  {
+    path: "/dictionary",
+    name: "Dictionary",
+    component: () => import(/* webpackChunkName: "DictionarySetting" */ "../views/admin/system/DictionarySetting.vue")
+  },
+  {
+    path: "/dictionaryType",
+    name: "DictionaryType",
+    component: () => import(/* webpackChunkName: "DictionaryType" */ "../views/admin/system/DictionaryType.vue")
   },
   {
     path: "/exception",
