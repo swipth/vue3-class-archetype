@@ -1,7 +1,6 @@
 import AdminLayout from "@/views/admin/AdminLayout.vue";
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 
-
 const commonRoutes: Array<RouteRecordRaw> = [
   {
     path: "/",
@@ -25,23 +24,23 @@ const commonRoutes: Array<RouteRecordRaw> = [
   {
     path: "/exception",
     name: "Exception",
-    component: () => import("./../views/exception/Exception.vue"),
+    component: () => import(/* webpackChunkName: "Exception" */ "./../views/exception/Exception.vue"),
     meta: {},
     children: [
       {
         path: "404",
         name: "Page404",
-        component: () => import("./../views/exception/Page404.vue"),
+        component: () => import(/* webpackChunkName: "Page404" */ "./../views/exception/Page404.vue"),
       },
       {
         path: "500",
         name: "Page500",
-        component: () => import("./../views/exception/Page500.vue"),
+        component: () => import(/* webpackChunkName: "Page500" */ "./../views/exception/Page500.vue"),
       },
       {
         path: "501",
         name: "Page501",
-        component: () => import("./../views/exception/Page501.vue"),
+        component: () => import(/* webpackChunkName: "Page501" */ "./../views/exception/Page501.vue"),
       },
     ]
   },
