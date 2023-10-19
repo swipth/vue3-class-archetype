@@ -39,7 +39,7 @@ export default class App extends Vue {
   }
   mounted() {
     // @ts-ignore
-    window.$wujie?.bus.$on("pwp-router-change", (path: string) =>
+    window.$wujie?.bus.$on("{{key}}-router-change", (path: string) =>
       this.$router.push(path)
     );
   }
