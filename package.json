@@ -10,7 +10,10 @@
     "build:test": "env-cmd -f .env.test vue-cli-service build",
     "build:prod": "env-cmd -f .env.production vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "lint:stylelint": "stylelint {src,mock}/**/*.{html,vue,css,sass,scss} --fix --cache --cache-location node_modules/.cache/stylelint/",
+    "lint:prettier": "prettier --write  \"src/**/*.{js,json,tsx,css,less,scss,vue,html,md}\"",
+    "prepare": "husky install"
   },
   "dependencies": {
     "ant-design-vue": "^4.0.3",
@@ -58,6 +61,12 @@
     "less-loader": "^8.0.0",
     "lint-staged": "^11.1.2",
     "prettier": "^2.4.1",
+    "stylelint": "^14.16.1",
+    "stylelint-config-prettier": "^9.0.3",
+    "stylelint-config-recess-order": "^3.0.0",
+    "stylelint-config-standard": "^23.0.0",
+    "stylelint-order": "^5.0.0",
+    "stylelint-prettier": "^2.0.0",
     "ts-jest": "^27.0.4",
     "typescript": "~4.5.5",
     "webpack": "^5.81.0"
