@@ -25,7 +25,6 @@ const lang = getLanguage();
     // 在 vue3-sub 路由下主动告知主应用路由跳转，主应用也跳到相应路由高亮菜单栏
     $route: {
       handler() {
-        // @ts-ignore
         window.$wujie?.bus.$emit("sub-route-change", "{{key}}", this.$route.path);
       },
       immediate: true,
@@ -38,13 +37,9 @@ export default class App extends Vue {
     return lang === "zh" ? zhCN : en;
   }
   mounted() {
-    // @ts-ignore
-    window.$wujie?.bus.$on("{{key}}-router-change", (path: string) =>
-      this.$router.push(path)
-    );
+    window.$wujie?.bus.$on("{{key}}-router-change", (path: string) =>this.$router.push(path));
   }
   get inner() {
-    // @ts-ignore
     return window.__POWERED_BY_WUJIE__
   }
 }

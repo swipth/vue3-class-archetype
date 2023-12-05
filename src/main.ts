@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
@@ -10,7 +9,7 @@ import "./styles/index.less";
 import "./router/guard"
 
 if (window.__POWERED_BY_WUJIE__) {
-  let instance;
+  let instance:any;
   window.__WUJIE_MOUNT = () => {
     instance = createApp(App);
     instance.use(router);

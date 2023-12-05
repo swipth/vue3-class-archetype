@@ -1,5 +1,5 @@
 import AdminLayout from "@/views/admin/AdminLayout.vue";
-import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
+import {createRouter, createWebHistory, RouteRecordRaw} from "vue-router";
 
 const commonRoutes: Array<RouteRecordRaw> = [
   {
@@ -59,15 +59,14 @@ const devRoutes = [
 ];
 
 export let routes: Array<RouteRecordRaw> = [];
-// @ts-ignore
 if (process.env.NODE_ENV === "development" && !window.__POWERED_BY_WUJIE__) {
-  routes = [...devRoutes];
+  routes = devRoutes;
 } else {
-  routes = [...commonRoutes];
+  routes =commonRoutes;
 }
 const router = createRouter({
-  // history: createWebHistory(process.env.BASE_URL),
-  history: createWebHashHistory(),
+  history: createWebHistory(process.env.BASE_URL),
+  // history: createWebHashHistory(),
   routes
 });
 export default router;

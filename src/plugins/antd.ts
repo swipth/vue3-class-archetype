@@ -1,11 +1,7 @@
 import antd from "ant-design-vue";
-
-// @ts-ignore
-import PbDesignVue3 from "pb-design-vue3";
+import {App} from "vue";
 // const language = window.$wujie.props.language;
 
-// @ts-ignore
-export const setup = (app) => {
-  app.use(PbDesignVue3);
+export const setup = (app:App) => {
   app.use(antd);
 };

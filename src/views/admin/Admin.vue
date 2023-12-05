@@ -3,9 +3,7 @@
  * @Description:管理后台
 -->
 <template>
-  <div>
-    <router-view/>
-  </div>
+  <router-view/>
 </template>
 
 <script lang="ts">
