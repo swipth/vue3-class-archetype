@@ -1,38 +1,3 @@
-export interface UserLoginType {
-  userName: string;
-  username: string;
-  userPwd: string;
-  password: string;
-  passwordKey: string;
-  verifyCode: string;
-  verifyCodeKey: string;
-  userPhone: string;
-  phoneCode: string;
-}
-
-export interface CheckPwd {
-  oldPwd: string;
-  showOldPwd: boolean;
-  newPwd: string;
-  showNewPwd: boolean;
-  confirmPwd: string;
-  showConfirmPwd: boolean;
-}
-
-export interface UserRegisterType {
-  userSource: string;
-  userType: number;
-  userCode: string;
-  userName: string;
-  email: string;
-  emailCode: number;
-  customerName: string;
-  passWord: string;
-  captchaCode: number;
-  captchaId: string;
-  region?: string;
-}
-
 export interface UserInfoDataType {
   address: string;
   city: string;
