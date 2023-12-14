@@ -4,6 +4,7 @@
 
 export const networkKey: {
   contentType: string;
+  contentJsonType: string;
   requestTimeout: number;
   messageName: string;
   statusName: string;
@@ -17,6 +18,7 @@ export const networkKey: {
 } = {
   // 网络传输类型
   contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+  contentJsonType: "application/json;charset=UTF-8",
   // 最长请求时间 30s
   requestTimeout: 30000,
   // 状态信息的字段名称
