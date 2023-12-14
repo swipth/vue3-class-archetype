@@ -1,7 +1,7 @@
 import en from "./en";
 import zh from "./zh";
 import {createI18n} from "vue-i18n";
-import {getLanguage} from "@/utils/clientStorage";
+import {getLanguage} from "@/config/clientStorage";
 import {App} from "vue";
 
 const lang = getLanguage();
@@ -18,6 +18,10 @@ const i18n = createI18n({
   messages
 });
 
+/**
+ * 国际化翻译
+ * @param title
+ */
 export function translateTitle(title: string) {
   const {t, te} = i18n.global;
   if (te(`${title}`)) return t(`${title}`);

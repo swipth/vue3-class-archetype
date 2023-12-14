@@ -1,4 +1,4 @@
-import AdminLayout from "@/views/admin/AdminLayout.vue";
+import AdminLayout from "@/layouts/CommonLayout.vue";
 import {createRouter, createWebHistory, RouteRecordRaw} from "vue-router";
 
 const commonRoutes: Array<RouteRecordRaw> = [

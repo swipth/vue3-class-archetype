@@ -1,5 +1,6 @@
 import { createStore } from "vuex";
 import app from "./modules/app";
+import {App} from "vue";
 
 const store = createStore({
   state: {},
@@ -9,7 +10,7 @@ const store = createStore({
   modules: { app }
 });
 
-export function setupStore(app:any):void {
+export function setupStore(app:App):void {
   app.use(store);
 }
 

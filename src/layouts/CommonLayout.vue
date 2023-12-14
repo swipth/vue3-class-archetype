@@ -46,13 +46,13 @@ export default class AdminLayout extends Vue {
       <div class="logo">
         <img
           v-if="!collapsed"
-          src="./../../assets/images/logo/logo_admin.png"
+          src="../assets/images/logo/logo_admin.png"
           width="200"
           height="60"
         />
         <img
           v-else
-          src="./../../assets/images/logo/logo.png"
+          src="../assets/images/logo/logo.png"
           width="50"
           height="50"
         />

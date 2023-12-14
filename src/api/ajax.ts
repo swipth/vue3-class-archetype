@@ -1,27 +1,22 @@
 import "nprogress/nprogress.css";
-
-import {message} from "ant-design-vue";
 import axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from "axios";
-// @ts-ignore
 import axiosRetry from "axios-retry";
-// @ts-ignore
 import NProgress from "nprogress"; // Progress 进度条
-
-import {contentType, dataName, messageName, requestTimeout, statusName, successName} from "@/config/network";
-import {noShowApiMessage} from "@/config/setting";
+import {networkKey} from "@/api/config/network";
 import router from "@/router/index";
 import store from "@/store";
 import {AjaxRes} from "@/types/common";
-import {getToken} from "@/utils/clientStorage";
+import {getToken} from "@/config/clientStorage";
+import {showErrorModal, showMessage} from "@/api/tip";
 
 NProgress.configure({showSpinner: false});
 
 //* ************************axios配置  拦截器*****************************//
 axios.defaults.baseURL = process.env.VUE_APP_BASE_API;
 // 前端超时限制
-axios.defaults.timeout = requestTimeout;
+axios.defaults.timeout = networkKey.requestTimeout;
 // @ts-ignore
-axios.defaults.headers["Content-Type"] = contentType;
+axios.defaults.headers["Content-Type"] = networkKey.contentType;
 
 // http请求拦截器
 axios.interceptors.request.use(
@@ -46,23 +41,23 @@ axios.interceptors.response.use(
       store.commit("user/setTokenInfo", response.headers._token);
     }
     NProgress.done(); // 结束Progress
-    switch (response.data[statusName]) {
+    switch (response.data[networkKey.statusName]) {
       case 401:
         break;
       case 403:
         break;
       case 404:
-        message.error(response.data[messageName]);
+        showErrorModal(response.data[networkKey.messageName]);
         break;
       case 500:
-        !noShowApiMessage.includes(response.config.url as string) && message.error(response.data[messageName] || "接口发生异常");
+        !networkKey.noShowApiMessage.includes(response.config.url as string) && showErrorModal(response.data[networkKey.messageName] || "接口发生异常");
         break;
       default:
-        if (response.data[messageName] && response.data[successName] && !response.data[dataName]) {
-          message.success(response.data[messageName] || "操作成功");
+        if (response.data[networkKey.messageName] && response.data[networkKey.successName] && !response.data[networkKey.dataName]) {
+          showMessage(response.data[networkKey.messageName] || "操作成功");
         }
-        if (response.data[messageName] && !response.data[successName] && !response.data[dataName]) {
-          message.error(response.data[messageName] || "接口发生异常");
+        if (response.data[networkKey.messageName] && !response.data[networkKey.successName] && !response.data[networkKey.dataName]) {
+          showErrorModal(response.data[networkKey.messageName] || "接口发生异常");
         }
         break;
     }
@@ -73,35 +68,28 @@ axios.interceptors.response.use(
 
     if (error.response && error.response.status === 401) {
       store.commit("user/logout");
-      message.config({top: `200px`});
-      message.warning({
-        content: "退出提示",
-        duration: 2,
-        onClose: () => {
-          router
-            .push({
-              path: "/auth/login",
-            })
-            .then(() => {
-            });
-        },
-      });
+      router
+        .push({
+          path: networkKey.loginPath
+        })
+        .then(() => {
+        });
     }
     // 403 无权限
     if (error.response && error.response.status === 403) {
-      message.warning(error.response.statusText);
+      showMessage(error.response.statusText);
     }
     // 404 请求不存在
     if (error.response && error.response.status === 404) {
-      message.warning(error.response.statusText);
+      showMessage(error.response.statusText);
     }
     // 405 请求方法不允许
     if (error.response && error.response.status === 405) {
-      message.warning(error.response.statusText);
+      showMessage(error.response.statusText);
     }
     // 415 Unsupported Media Type co
     if (error.response && error.response.status === 415) {
-      message.warning(error.response.statusText);
+      showMessage(error.response.statusText);
     }
     //服务器没有能力完成请求
     if (error.response && error.response.status === 501) {
@@ -150,7 +138,7 @@ export const ajax = ({url, method = "GET", params = {}, data = {}, baseURL = und
       data,
       withCredentials: true,
       responseType, // default json  options are: 'arraybuffer', 'document', 'json', 'text', 'stream'  browser only: 'blob'
-      validateStatus: function (status) {
+      validateStatus: function (status: number) {
         return status >= 200 && status < 300; // default
       },
     })

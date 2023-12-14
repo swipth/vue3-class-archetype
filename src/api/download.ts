@@ -10,7 +10,8 @@ import axios, { AxiosResponse, Method } from "axios";
 import NProgress from "nprogress";
 import {translateTitle} from "@/locales";
 import { AjaxRes } from "@/types/common";
-import { messageName } from "@/config/network";
+import {networkKey} from "@/api/config/network";
+import {showErrorModal} from "@/api/tip";
 
 let modal: any;
 /**
@@ -90,10 +91,8 @@ const convertRes2Blob = async (response: AxiosResponse, name?: string) => {
   let fileName = "";
   const responseJson: AjaxRes = await blobToObj(response.data);
   if (!responseJson.success) {
-    Modal.error({
-      title: translateTitle("接口温馨提醒"),
-      content: responseJson[messageName] as string,
-    });
+    // @ts-ignore
+    showErrorModal(responseJson[networkKey.messageName]);
     modal.destroy();
     NProgress.done();
     return;
@@ -192,13 +191,22 @@ export const blobToObj = (data: Blob): Promise<AjaxRes> => {
       try {
         resolve(JSON.parse(reader.result as string));
       } catch (error) {
-        resolve({
-          code: 200,
-          success: true,
-          data: null,
-          message: "当前信息为数据流信息，接口正常",
-          timestamp: "2023-10-06",
-        });
+        if (typeof reader.result === "string" && (reader.result as string).includes("不存在"))
+          resolve({
+            code: 500,
+            success: false,
+            data: null,
+            message: (reader.result as string) || "The file does not exist",
+            timestamp: "2023-10-06",
+          });
+        else
+          resolve({
+            code: 200,
+            success: true,
+            data: null,
+            message: "数据流返回正常",
+            timestamp: "",
+          });
       }
     };
   });

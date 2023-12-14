@@ -1,12 +1,14 @@
 // 版本监控
-import { checkVersion } from "@/api/interface/version";
+import {ajax} from "@/api/ajax";
 
+export const checkVersion = () => ajax({ url: process.env.VUE_APP_BASE_URL + "static/version.json", method: "GET", baseURL: "/" });
 const { currentVersion } = require("../../version/info");
 import { Modal } from "ant-design-vue";
 import { AjaxRes } from "@/types/common";
 import {translateTitle} from "@/locales";
-import { getErrorModalNumber, removeErrorModalNumber, setErrorModalNumber } from "@/utils/clientStorage";
-import { showVersionModal } from "@/config/setting";
+
+// 是否显示弹框提示刷新
+const showVersionModal=false;
 
 /**
  * 版本检测
@@ -62,3 +64,9 @@ export function compareTimeValid() {
   const oldTime = Number(getUrlQuery("t"));
   return Date.now() - oldTime < 2 * 60 * 1000;
 }
+// 记录退出弹框数量
+export const setErrorModalNumber = () => {
+  sessionStorage.setItem("ErrorModalNumber", "1");
+};
+export const getErrorModalNumber = () => sessionStorage.getItem("ErrorModalNumber");
+export const removeErrorModalNumber = () => sessionStorage.removeItem("ErrorModalNumber");
