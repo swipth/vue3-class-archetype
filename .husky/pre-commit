@@ -12,7 +12,7 @@ $(dirname -- "$0")/commit-msg .git/COMMIT_EDITMSG $commit_id
 #npm run lint
 
 # 在执行 git add 命令之前，先执行你的脚本或命令
-#node "./version/update-number.js"
+#node "./src/api/version/update-number.js"
 
 # 执行 git add 命令
 # git add .
