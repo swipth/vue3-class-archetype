@@ -9,7 +9,7 @@ import { Modal } from "ant-design-vue";
 import axios, { AxiosResponse, Method } from "axios";
 import NProgress from "nprogress";
 import {translateTitle} from "@/locales";
-import { AjaxRes } from "@/types/common";
+import { AjaxRes } from "@/types/common/apiResponse";
 import {networkKey} from "@/api/config/network";
 import {showErrorModal} from "@/api/tip";
 

@@ -5,6 +5,8 @@
 export const networkKey: {
   contentType: string;
   contentJsonType: string;
+  contentTextType: string;
+  contentMultipartFormType: string;
   requestTimeout: number;
   messageName: string;
   statusName: string;
@@ -16,9 +18,15 @@ export const networkKey: {
   messageDuration:number;
   defaultLogoutTime:number
 } = {
-  // 网络传输类型
+  // 网络传输类型 // form-data 一般配合qs
   contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+  // json
   contentJsonType: "application/json;charset=UTF-8",
+  // text
+  contentTextType: "text/plain;charset=UTF-8",
+  // form-data  一般用于含有二进制文件上传
+  contentMultipartFormType:"multipart/form-data;charset=UTF-8",
+  // form-data  上传
   // 最长请求时间 30s
   requestTimeout: 30000,
   // 状态信息的字段名称

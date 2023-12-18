@@ -5,7 +5,7 @@ import NProgress from "nprogress"; // Progress 进度条
 import {networkKey} from "@/api/config/network";
 import router from "@/router/index";
 import store from "@/store";
-import {AjaxRes} from "@/types/common";
+import {AjaxRes} from "@/types/common/apiResponse";
 import {getToken} from "@/config/clientStorage";
 import {showErrorModal, showMessage} from "@/api/tip";
 

@@ -1,6 +1,6 @@
 import { ajax } from "@/api/ajax";
 import { paramsSerialize } from "@/api/serialize";
-import { AjaxRes } from "@/types/common";
+import { AjaxRes } from "@/types/common/apiResponse";
 import {networkKey} from "@/api/config/network";
 
 export const ajaxGet = (url: string, params = {}): Promise<AjaxRes> => ajax({ method: "get", url, params });
