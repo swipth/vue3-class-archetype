@@ -12,3 +12,7 @@ const localStorageKey = {
 export const getLanguage = () => window.$wujie?.props?.language || localStorageKey.defaultLanguage;
 
 export const getToken = () => window.$wujie?.props?.token
+export const clearToken=()=>{}
+export const setLoginToken=(token:string)=>{
+  localStorage.setItem("token", token)
+}

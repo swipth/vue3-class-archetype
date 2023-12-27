@@ -3,11 +3,8 @@ import axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from "axios";
 import axiosRetry from "axios-retry";
 import NProgress from "nprogress"; // Progress 进度条
 import {networkKey} from "@/api/config/network";
-import router from "@/router/index";
-import store from "@/store";
 import {AjaxRes} from "@/types/common/apiResponse";
-import {getToken} from "@/config/clientStorage";
-import {showErrorModal, showMessage} from "@/api/tip";
+import {handleAxiosResponseAction} from "@/api/tip";
 
 NProgress.configure({showSpinner: false});
 
@@ -20,12 +17,10 @@ axios.defaults.headers["Content-Type"] = networkKey.contentType;
 
 // http请求拦截器
 axios.interceptors.request.use(
-  (config: AxiosRequestConfig) => {
+  (config) => {
     NProgress.start();
-    if (getToken()) {
-      config.headers = {
-        Authorization: getToken(),
-      };
+    if (handleAxiosResponseAction.getToken()) {
+      config.headers![networkKey.Authorization] = handleAxiosResponseAction.getToken();
     }
     return config;
   },
@@ -37,71 +32,16 @@ axios.interceptors.request.use(
 // http响应拦截器
 axios.interceptors.response.use(
   (response: AxiosResponse) => {
-    if (response.headers._token && response.config.url !== "/api/base/v1/simplelogin") {
-      store.commit("user/setTokenInfo", response.headers._token);
+    if (response.headers["InterfaceToken"] && response.config.url !== networkKey.loginInterfacePath) {
+      handleAxiosResponseAction.setToken(response.headers["InterfaceToken"])
     }
     NProgress.done(); // 结束Progress
-    switch (response.data[networkKey.statusName]) {
-      case 401:
-        break;
-      case 403:
-        break;
-      case 404:
-        showErrorModal(response.data[networkKey.messageName]);
-        break;
-      case 500:
-        !networkKey.noShowApiMessage.includes(response.config.url as string) && showErrorModal(response.data[networkKey.messageName] || "接口发生异常");
-        break;
-      default:
-        if (response.data[networkKey.messageName] && response.data[networkKey.successName] && !response.data[networkKey.dataName]) {
-          showMessage(response.data[networkKey.messageName] || "操作成功");
-        }
-        if (response.data[networkKey.messageName] && !response.data[networkKey.successName] && !response.data[networkKey.dataName]) {
-          showErrorModal(response.data[networkKey.messageName] || "接口发生异常");
-        }
-        break;
-    }
+    handleAxiosResponseAction.handelServiceResponse(response)
     return response;
   },
   (error: AxiosError) => {
     NProgress.done(); // 结束Progress
-
-    if (error.response && error.response.status === 401) {
-      store.commit("user/logout");
-      router
-        .push({
-          path: networkKey.loginPath
-        })
-        .then(() => {
-        });
-    }
-    // 403 无权限
-    if (error.response && error.response.status === 403) {
-      showMessage(error.response.statusText);
-    }
-    // 404 请求不存在
-    if (error.response && error.response.status === 404) {
-      showMessage(error.response.statusText);
-    }
-    // 405 请求方法不允许
-    if (error.response && error.response.status === 405) {
-      showMessage(error.response.statusText);
-    }
-    // 415 Unsupported Media Type co
-    if (error.response && error.response.status === 415) {
-      showMessage(error.response.statusText);
-    }
-    //服务器没有能力完成请求
-    if (error.response && error.response.status === 501) {
-      //跳到 501 页面
-      router.push("/501").then(() => {
-      });
-    }
-    if (error.response && [504, 502, 500, 400].includes(error.response.status)) {
-      //跳到 500 页面
-      router.push("/500").then(() => {
-      });
-    }
+    handleAxiosResponseAction.handleStatusError(error.response)
     return Promise.reject(error);
   }
 );
