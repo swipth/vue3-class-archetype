@@ -6,11 +6,22 @@ import {networkKey} from "@/api/config/network";
 import {AxiosResponse} from "axios";
 import {clearToken, getToken, setLoginToken} from "@/config/clientStorage";
 
+const showMessage = (content: string, type = "error") => {
+  if (type == "success")
+    message.success(content)
+  else if (type == "warn")
+    message.warning(content)
+  else
+    message.error(content)
+}
+const showErrorModal = (content: string | TranslateResult) => {
+  Modal.error({content, centered: true, title: "Error",})
+}
 export const handleAxiosResponseAction = {
   // 获取登录令牌
   getToken: (): string => getToken(),
   clearToken: (): void => clearToken(),
-  setToken: (token:string): void => setLoginToken(token),
+  setToken: (token: string): void => setLoginToken(token),
   /**
    * 处理接口服务器自动以返回消息提示
    * @param response
@@ -18,17 +29,14 @@ export const handleAxiosResponseAction = {
   handelServiceResponse: (response: AxiosResponse) => {
     switch (response.data[networkKey.statusName]) {
       case 500:
-        // @ts-ignore
-        !networkKey.noShowApiMessage.includes(response.config.url as string) && this.showErrorModal(response.data[networkKey.messageName] || "Interface Error");
+        !networkKey.noShowApiMessage.includes(response.config.url as string) && showErrorModal(response.data[networkKey.messageName] || "Interface Error");
         break;
       default:
         if (response.data[networkKey.messageName] && response.data[networkKey.successName] && !response.data[networkKey.dataName]) {
-          // @ts-ignore
-          this.showMessage(response.data[networkKey.messageName] || "Action Success", "success");
+          showMessage(response.data[networkKey.messageName] || "Action Success", "success");
         }
         if (response.data[networkKey.messageName] && !response.data[networkKey.successName] && !response.data[networkKey.dataName]) {
-          // @ts-ignore
-          this.showErrorModal(response.data[networkKey.messageName] || "Interface Error");
+          showErrorModal(response.data[networkKey.messageName] || "Interface Error");
         }
         break;
     }
@@ -38,21 +46,12 @@ export const handleAxiosResponseAction = {
    * @param content
    * @param type
    */
-  showMessage: (content: string, type = "error") => {
-    if (type == "success")
-      return message.success(content)
-    else if (type == "warn")
-      return message.warning(content)
-    else
-      return message.error(content)
-  },
+  showMessage,
   /**
    * 消息弹窗
    * @param content
    */
-  showErrorModal: (content: string | TranslateResult) => {
-    Modal.error({content, centered: true, title: "Error",})
-  },
+  showErrorModal,
   /**
    * 处理异常响应错误
    * @param response
