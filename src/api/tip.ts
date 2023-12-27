@@ -12,5 +12,5 @@ export const showErrorModal = (content: string | TranslateResult) => {
 }
 
 export const showInfoModal = (config: { title: string; content: string, okText: string }) => {
-  return Modal.info({content: config, centered: true, title: config.title, okText: config.okText})
+  return Modal.info({content: config.content, centered: true, title: config.title, okText: config.okText})
 }
