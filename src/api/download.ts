@@ -11,7 +11,6 @@ import NProgress from "nprogress";
 import {translateTitle} from "@/locales";
 import { AjaxRes } from "@/types/common/apiResponse";
 import {networkKey} from "@/api/config/network";
-import {showErrorModal} from "@/api/tip";
 
 let modal: any;
 /**
@@ -69,12 +68,12 @@ const fileDownload = (url: string, params: Record<string, unknown>, method: Meth
     },
     responseType: "blob",
     timeout: 120000, // 如果服务器文件较大的，这里超时时间可以设置长一点
-    onDownloadProgress: (e) => {
+    onDownloadProgress: (e:any) => {
       if (e.lengthComputable) {
         // 对原生进度事件的处理
         // parseInt((e.loaded / e.total) * 100) };
         // 下载完成
-        modal.update({ content: translateTitle("当前文件下载进度") + "：" + ((e.loaded / e.total) * 100).toFixed(2) + "%" });
+        modal.update({ content: translateTitle("当前文件下载进度") + "：" + ((e.loaded / e?.total) * 100).toFixed(2) + "%" });
         if (e.loaded === e.total) {
           NProgress.set(e.loaded / e.total);
           modal.destroy();

@@ -29,7 +29,7 @@ export const ajaxUpload = (url: string, file: File, method: Method = "PUT") => {
       data: formData,
       timeout: 120000, //上传大文件比较耗时需要增加超时时间
       headers: { "Content-Type": "multipart/form-data" },
-      onUploadProgress(e) {
+      onUploadProgress(e:any) {
         if (e.lengthComputable) {
           // 文件大小大于10M 显示进度弹窗
           if (file.size > 10 * 1024 * 1024) modal.update({ content: translateTitle("当前文件上传进度") + "：" + ((e.loaded / e.total) * 100).toFixed(2) + "%" });

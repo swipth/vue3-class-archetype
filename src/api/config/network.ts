@@ -28,6 +28,8 @@ export const networkKey= {
   noShowApiMessage: [""],
   // 后台登录接口
   loginInterfacePath: "/auth/login",
+  // 刷新token接口
+  refreshTokenInterfacePath: "/api/admin/auth/refresh",
   // 登录地址
   loginPath:"/auth/login",
   // 服务端响应头返回token字段名称
