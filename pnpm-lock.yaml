@@ -157,6 +157,9 @@ devDependencies:
   plop:
     specifier: ^4.0.1
     version: 4.0.1
+  plop-templates-pharmablock:
+    specifier: ^0.1.2
+    version: 0.1.2
   prettier:
     specifier: ^2.4.1
     version: 2.8.7
@@ -9026,6 +9029,10 @@ packages:
     resolution: {integrity: sha512-gQR3WpIgNIKwBMVLkpMUeR3e1/E1y42bqDQZfql+kDeXd8COYfM8PQA4X6y7a8u9Ua9FHmsrrmirW2vHs45hWg==}
     dependencies:
       semver-compare: 1.0.0
+    dev: true
+
+  /plop-templates-pharmablock@0.1.2:
+    resolution: {integrity: sha512-lDmON8xkYzP97RwAnRuJfE7g43W63xhsP18AjrW9WGt8KTa+al1PTQ3wMtM/8TTDBqvCaHOaWxiD5Q9LiTWEAQ==}
     dev: true
 
   /plop@4.0.1:
