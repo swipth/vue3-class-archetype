@@ -8,10 +8,16 @@
 import { Modal } from "ant-design-vue";
 import axios, { AxiosResponse, Method } from "axios";
 import NProgress from "nprogress";
-import {translateTitle} from "@/locales";
-import { AjaxRes } from "@/types/common/apiResponse";
 import {networkKey} from "@/api/config/network";
 
+export interface AjaxRes {
+  code: number;
+  data: any | null;
+  result?: any | null;
+  success: boolean;
+  timestamp: string;
+  message: string;
+}
 let modal: any;
 /**
  * 自定义axios下载
@@ -36,16 +42,16 @@ export const ajaxDownload = (url: string, params: Record<string, unknown> = {}, 
         if (typeof error === "object") {
           if (error.type) {
             if (error.type === 404) {
-              Modal.error({ content: "服务端找不到文件", centered: true });
+              Modal.error({ content: "Not Found File", centered: true });
             }
             if (error.response) {
               if (error.response.status === 404) {
-                Modal.error({ content: "服务端找不到文件", centered: true });
+                Modal.error({ content: "Not Found File", centered: true });
               } else {
-                Modal.error({ content: "文件下载失败了", centered: true });
+                Modal.error({ content: "Download Error", centered: true });
               }
             } else {
-              Modal.error({ content: "文件内容解析失败", centered: true });
+              Modal.error({ content: "File Parse Error", centered: true });
             }
           }
           reject(error);
@@ -55,7 +61,7 @@ export const ajaxDownload = (url: string, params: Record<string, unknown> = {}, 
 };
 
 const fileDownload = (url: string, params: Record<string, unknown>, method: Method, data: Record<string, unknown>) => {
-  modal = Modal.info({ title: translateTitle("文件下载"), content: translateTitle("开始下载"), centered: true, okText: translateTitle("关闭") as string });
+  modal = Modal.info({ title: "File Download", content: "Starting Download", centered: true, okText: "Close" });
   // tips: 这里直接返回的是response整体!
   return axios({
     url,
@@ -73,7 +79,7 @@ const fileDownload = (url: string, params: Record<string, unknown>, method: Meth
         // 对原生进度事件的处理
         // parseInt((e.loaded / e.total) * 100) };
         // 下载完成
-        modal.update({ content: translateTitle("当前文件下载进度") + "：" + ((e.loaded / e?.total) * 100).toFixed(2) + "%" });
+        modal.update({ content:  + "Current Progress ：" + ((e.loaded / e?.total) * 100).toFixed(2) + "%" });
         if (e.loaded === e.total) {
           NProgress.set(e.loaded / e.total);
           modal.destroy();

@@ -2,7 +2,7 @@
  * @description 导出网络配置
  **/
 
-export const networkKey= {
+export const networkKey = {
   // 网络传输类型 // form-data 一般配合qs
   contentType: "application/x-www-form-urlencoded;charset=UTF-8",
   // json
@@ -10,7 +10,7 @@ export const networkKey= {
   // text
   contentTextType: "text/plain;charset=UTF-8",
   // form-data  一般用于含有二进制文件上传
-  contentMultipartFormType:"multipart/form-data;charset=UTF-8",
+  contentMultipartFormType: "multipart/form-data;charset=UTF-8",
   // form-data  上传
   // 最长请求时间 30s
   requestTimeout: 30000,
@@ -31,14 +31,15 @@ export const networkKey= {
   // 刷新token接口
   refreshTokenInterfacePath: "/api/admin/auth/refresh",
   // 登录地址
-  loginPath:"/auth/login",
+  loginPath: "/auth/login",
   // 服务端响应头返回token字段名称
-  InterfaceToken:"InterfaceToken",
+  InterfaceToken: "InterfaceToken",
   // 请求头令牌字段
-  Authorization:"Authorization",
+  Authorization: "Authorization",
   // 消息框消失时间
-  messageDuration:3000,
+  messageDuration: 3000,
   // 用户静默退出时间
-  defaultLogoutTime:2 * 60 * 60 * 1000
+  defaultLogoutTime: 2 * 60 * 60 * 1000,
+  auth: undefined
 }
 

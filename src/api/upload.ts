@@ -4,10 +4,9 @@
  * 下载请求示例  默认post请求 参照此示例 不要在组件中直接调用  ajaxUpload
  *  const uploadFile =()=>ajaxUpload("/api/vi/upload",{name:"zs},{})
  */
-import { Modal } from "ant-design-vue";
-import axios, { AxiosError, AxiosResponse, Method } from "axios";
+import {Modal} from "ant-design-vue";
+import axios, {AxiosError, AxiosResponse, Method} from "axios";
 import NProgress from "nprogress";
-import {translateTitle} from "@/locales";
 
 let modal: any;
 /**
@@ -15,24 +14,30 @@ let modal: any;
  * @param url
  * @param file
  * @param method
+ * @param params
+ * @param data
  */
-export const ajaxUpload = (url: string, file: File, method: Method = "PUT") => {
+export const ajaxUpload = ({url, file, method = "PUT", params, data}: { url: string, file: File, params: Record<string, any>, data: Record<string, any>, method: Method }) => {
   //单个图片上传
   const formData = new FormData();
   formData.append("file", file);
+  Object.keys((key: string) => {
+    formData.append("key", data[key]);
+  })
   return new Promise((resolve, reject) => {
     NProgress.start();
-    if (file.size > 10 * 1024 * 1024) modal = Modal.info({ title: translateTitle("文件上传"), content: translateTitle("开始上传"), centered: true, okText: translateTitle("关闭") as string });
+    if (file.size > 10 * 1024 * 1024) modal = Modal.info({title: "File Upload", content: "Starting Upload", centered: true, okText: "Close"});
     axios({
       url,
       method,
+      params,
       data: formData,
       timeout: 120000, //上传大文件比较耗时需要增加超时时间
-      headers: { "Content-Type": "multipart/form-data" },
-      onUploadProgress(e:any) {
+      headers: {"Content-Type": "multipart/form-data"},
+      onUploadProgress(e: any) {
         if (e.lengthComputable) {
           // 文件大小大于10M 显示进度弹窗
-          if (file.size > 10 * 1024 * 1024) modal.update({ content: translateTitle("当前文件上传进度") + "：" + ((e.loaded / e.total) * 100).toFixed(2) + "%" });
+          if (file.size > 10 * 1024 * 1024) modal.update({content: "Current Progress ：" + ((e.loaded / e.total) * 100).toFixed(2) + "%"});
           if (e.loaded === e.total) {
             NProgress.set(e.loaded / e.total);
             // modal.destroy()
@@ -50,11 +55,10 @@ export const ajaxUpload = (url: string, file: File, method: Method = "PUT") => {
         Modal.destroyAll();
         // modal.destroy();
         reject(err);
-        Modal.error({ content: translateTitle("文件上传失败"), centered: true });
+        Modal.error({content: "Upload Error", centered: true});
       });
   });
 };
-
 //ProgressEvent.lengthComputable 只读
 // 是一个 Boolean 标志，表示底层流程将需要完成的总工作量和已经完成的工作量是否可以计算。换句话说，它告诉我们进度是否可以被测量。
 // ProgressEvent.loaded 只读

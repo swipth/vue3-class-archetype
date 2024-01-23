@@ -2,10 +2,16 @@
 import {ajax} from "@/api/ajax";
 
 export const checkVersion = () => ajax({ url: process.env.VUE_APP_BASE_URL + "static/version.json", method: "GET", baseURL: "/" });
-const { currentVersion } = require("@/api/version/info");
+const { currentVersion } = require("../../version/info");
 import { Modal } from "ant-design-vue";
-import { AjaxRes } from "@/types/common/apiResponse";
-import {translateTitle} from "@/locales";
+export interface AjaxRes {
+  code: number;
+  data: any | null;
+  result?: any | null;
+  success: boolean;
+  timestamp: string;
+  message: string;
+}
 
 // 是否显示弹框提示刷新
 const showVersionModal=false;
@@ -26,9 +32,9 @@ export function versionCheck(callback?: () => void) {
           if (!getErrorModalNumber()) {
             Modal.info({
               centered: true,
-              title: translateTitle("提示"),
-              content: translateTitle("系统发现新版本") + res.data.version + translateTitle("即将进行更新"),
-              okText: translateTitle("确定") as string,
+              title: "Tip",
+              content: "New Version " + res.data.version + "will be updated",
+              okText: "Confirm",
               onOk: refreshPage,
             });
           }
