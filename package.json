@@ -16,7 +16,10 @@
     "template": "plop",
     "generate:api": "node ./gen/generate-api.js",
     "generate:template": "node ./gen/generate-templates.js",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "deploy": "npm run build && npx gh-pages -d dist",
+    "test:gzip": "npx http-server dist --cors --gzip -c-1",
+    "test:br": "npx http-server dist --cors --brotli -c-1"
   },
   "dependencies": {
     "ant-design-vue": "^4.0.3",
