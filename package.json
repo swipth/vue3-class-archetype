@@ -7,8 +7,9 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "build:test": "env-cmd -f .env.test vue-cli-service build",
-    "build:prod": "env-cmd -f .env.production vue-cli-service build && node ",
+    "build:test": "env-cmd -f .env.test vue-cli-service build && node ./version/update.js",
+    "build:prod": "env-cmd -f .env.production vue-cli-service build && node ./version/update.js",
+    "build:report": "vue-cli-service build --report && npx live-server --open=dist/report.html",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
     "lint:stylelint": "stylelint {src,mock}/**/*.{html,vue,css,sass,scss} --fix --cache --cache-location node_modules/.cache/stylelint/",
