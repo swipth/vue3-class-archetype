@@ -17,7 +17,7 @@
 import zhCN from "ant-design-vue/es/locale/zh_CN";
 import en from "ant-design-vue/es/locale/en_US";
 import { Options, Vue } from "vue-class-component";
-import { getLanguage } from "@/utils/clientStorage";
+import { getLanguage } from "@/config/clientStorage";
 
 const lang = getLanguage();
 @Options({
