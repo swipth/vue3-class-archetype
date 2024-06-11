@@ -1,6 +1,7 @@
 import {ajax} from "@/api/ajax";
 
 export const checkVersion = () => ajax({url: process.env.VUE_APP_BASE_URL + "static/version.json", method: "GET", baseURL: "/"});
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const {currentVersion} = require("../version/info");
 import {Modal} from "ant-design-vue";
 import {AjaxRes} from "@/types/common/apiResponse";
