@@ -25,7 +25,7 @@ const commonRoutes: Array<RouteRecordRaw> = [
     path: "/exception",
     name: "Exception",
     component: () => import(/* webpackChunkName: "Exception" */ "./../views/exception/Exception.vue"),
-    meta: {},
+    meta: {title:"Exception"},
     children: [
       {
         path: "404",

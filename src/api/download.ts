@@ -59,7 +59,8 @@ const convertRes2Blob = async (response: AxiosResponse, name?: string) => {
   let fileName = "";
   const responseJson: AjaxRes = await blobToObj(response.data);
   if (!responseJson.success) {
-    showErrorModal(responseJson[networkKey.messageName]);
+    // @ts-ignore
+    handleAxiosResponseAction.showErrorModal(responseJson[networkKey.messageName]);
     modal.destroy();
     NProgress.done();
     return;
@@ -71,7 +72,9 @@ const convertRes2Blob = async (response: AxiosResponse, name?: string) => {
   }
   fileName = name ? name : fileName;
   const blob = new Blob([response.data]);
+  // @ts-ignore
   if (typeof window.navigator["msSaveBlob"] !== "undefined") {
+    // @ts-ignore
     window.navigator.msSaveBlob(blob, decodeURI(fileName));
   } else {
     const blobURL = window.URL.createObjectURL(blob);

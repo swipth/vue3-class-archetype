@@ -12,7 +12,7 @@ export default function setPageTitle(meta: RouteMeta): string {
   const language = getLanguage();
   const pageTitle = language === "zh" ? meta.title : meta.englishTitle;
   let newTitles = ["PharmaBlock"];
-  if (pageTitle) newTitles.unshift(pageTitle);
+  if (pageTitle) newTitles.unshift(pageTitle as string);
   if (projectGlobalKey.titleReverse) newTitles = newTitles.reverse();
   return newTitles.join(projectGlobalKey.titleSeparator);
 }
