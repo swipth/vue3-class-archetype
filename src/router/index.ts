@@ -3,10 +3,6 @@ import {createRouter, createWebHashHistory, RouteRecordRaw} from "vue-router";
 
 const commonRoutes: Array<RouteRecordRaw> = [
   {
-    path: "/",
-    redirect: "/workbench"
-  },
-  {
     path: "/workbench",
     name: "Workbench",
     component: () => import(/* webpackChunkName: "Workbench" */ "../views/admin/portal/Workbench.vue"),
