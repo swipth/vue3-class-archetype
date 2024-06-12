@@ -45,8 +45,9 @@ const commonRoutes: Array<RouteRecordRaw> = [
     ]
   },
   {
-    path: "*",
-    redirect: "/404",
+    name: "NotFound",
+    path: "/:pathMatch(.*)*",
+    redirect: "/exception/404",
   },
 ];
 const devRoutes = [
