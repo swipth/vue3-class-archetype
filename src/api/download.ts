@@ -3,6 +3,7 @@ import axios, {AxiosResponse, Method} from "axios";
 import NProgress from "nprogress";
 import {networkKey} from "@/api/config/network";
 import {AjaxRes} from "@/types/common/apiResponse";
+import {handleAxiosResponseAction} from "@/api/tip";
 
 let modal: any;
 export const ajaxDownload = (url: string, params: Record<string, unknown> = {}, method: Method = "GET", data: Record<string, unknown> = {}, name?: string) => {
@@ -37,23 +38,30 @@ export const ajaxDownload = (url: string, params: Record<string, unknown> = {}, 
 const fileDownload = (url: string, params: Record<string, unknown>, method: Method, data: Record<string, unknown>) => {
   modal = Modal.info({title: "File Download", content: "Starting Download", centered: true, okText: "Close"});
   return axios({
+    baseURL: process.env.VUE_APP_BASE_API,
     url,
     method,
     params,
     data,
-    headers: {Accept: "application/json", "Content-Type": "application/json; charset=utf-8",},
-    responseType: "blob",
-    timeout: 120000,
-    onDownloadProgress: (e: any) => {
-      if (e.lengthComputable) {
-        modal.update({content: +"Current Progress ：" + ((e.loaded / e?.total) * 100).toFixed(2) + "%"});
-        if (e.loaded === e.total) {
-          NProgress.set(e.loaded / e.total);
-          modal.destroy();
-        }
-      }
+    headers: {
+      Accept: "application/json", "Content-Type": "application/json; charset=utf-8", Authorization: handleAxiosResponseAction.getToken()
     },
-  });
+    responseType:
+      "blob",
+    timeout:
+      120000,
+    onDownloadProgress:
+      (e: any) => {
+        if (e.lengthComputable) {
+          modal.update({content: +"Current Progress ：" + ((e.loaded / e?.total) * 100).toFixed(2) + "%"});
+          if (e.loaded === e.total) {
+            NProgress.set(e.loaded / e.total);
+            modal.destroy();
+          }
+        }
+      },
+  })
+    ;
 };
 const convertRes2Blob = async (response: AxiosResponse, name?: string) => {
   let fileName = "";
