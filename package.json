@@ -7,8 +7,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "build:test": "env-cmd -f .env.test vue-cli-service build && node ./version/update.js",
-    "build:prod": "env-cmd -f .env.production vue-cli-service build && node ./version/update.js",
+    "build:test": "env-cmd -f .env.test vue-cli-service build && env-cmd -f .env.test node ./version/update.js",
+    "build:prod": "env-cmd -f .env.production vue-cli-service build && env-cmd -f .env.production node ./version/update.js",
     "build:report": "vue-cli-service build --report && npx live-server --open=dist/report.html",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
@@ -23,7 +23,7 @@
     "test:br": "npx http-server dist --cors --brotli -c-1"
   },
   "dependencies": {
-    "@vueuse/core": "^10.10.0",
+    "@vueuse/core": "10.5.0",
     "ant-design-vue": "^4.0.3",
     "axios": "^1.6.5",
     "axios-retry": "^4.0.0",
