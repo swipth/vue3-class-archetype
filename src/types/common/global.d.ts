@@ -23,6 +23,8 @@ declare global {
       props?: { [key: string]: any };
       location?: NonNullable<unknown>;
     };
+    requests: { [key: string]: any };
+    tokenRefreshing: boolean;
   }
 }
 
