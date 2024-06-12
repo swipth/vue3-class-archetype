@@ -18,7 +18,7 @@ export default class PaginationFooter extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang="less">
 .pagination-footer {
   padding: 6px 0;
   background-color: #f9f9f9;
