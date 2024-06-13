@@ -3,7 +3,7 @@
  * @Description:
 -->
 <script lang="ts">
-import { Options, Vue } from "vue-class-component";
+import {Options, Vue} from "vue-class-component";
 import {
   MenuFoldOutlined,
   DesktopOutlined,
@@ -13,6 +13,7 @@ import {
   BarsOutlined,
   ProfileOutlined,
 } from "@ant-design/icons-vue";
+import {extendRoutes} from "@/router/modules/extend";
 
 @Options({
   components: {
@@ -27,7 +28,14 @@ import {
 })
 export default class AdminLayout extends Vue {
   collapsed = false;
-  selectedKeys = ["/workbench"];
+  selectedKeys = [];
+  extendRoutes = extendRoutes
+
+  created() {
+    // 初始化选中菜单
+    //@ts-ignore
+    this.selectedKeys = [this.$route.path];
+  }
 
   menuClick(item: { key: string }) {
     this.$router.push(item.key);
@@ -63,17 +71,9 @@ export default class AdminLayout extends Vue {
         mode="inline"
         @click="menuClick"
       >
-        <a-menu-item key="/workbench">
-          <DesktopOutlined />
-          <span>工作台</span>
-        </a-menu-item>
-        <a-menu-item key="/dictionaryType">
-          <BarsOutlined />
-          <span>数据字典(大类)</span>
-        </a-menu-item>
-        <a-menu-item key="/dictionary">
-          <ProfileOutlined />
-          <span>数据字典</span>
+        <a-menu-item :key="item.path" v-for="item in extendRoutes">
+          <DesktopOutlined/>
+          <span>{{ item.meta?.title }}</span>
         </a-menu-item>
       </a-menu>
     </a-layout-sider>
@@ -99,7 +99,7 @@ export default class AdminLayout extends Vue {
           maxHeight: '850px'
         }"
       >
-        <router-view />
+        <router-view/>
       </a-layout-content>
     </a-layout>
   </a-layout>
