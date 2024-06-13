@@ -23,6 +23,7 @@
     "test:br": "npx http-server dist --cors --brotli -c-1"
   },
   "dependencies": {
+    "@ant-design/icons-vue": "^7.0.1",
     "@vueuse/core": "10.5.0",
     "ant-design-vue": "^4.0.3",
     "axios": "^1.6.5",
