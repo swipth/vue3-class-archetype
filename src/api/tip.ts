@@ -121,7 +121,7 @@ export const handleAxiosResponseAction = {
           message = "Abnormal problems, please contact the webmaster";
           break;
       }
-      return message;
+      showErrorModal(message)
     }
   }
 }
