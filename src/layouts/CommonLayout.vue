@@ -28,12 +28,11 @@ import {extendRoutes} from "@/router/modules/extend";
 })
 export default class AdminLayout extends Vue {
   collapsed = false;
-  selectedKeys = [];
+  selectedKeys:string[] = [];
   extendRoutes = extendRoutes
 
   created() {
     // 初始化选中菜单
-    //@ts-ignore
     this.selectedKeys = [this.$route.path];
   }
 
@@ -45,32 +44,12 @@ export default class AdminLayout extends Vue {
 
 <template>
   <a-layout class="container">
-    <a-layout-sider
-      v-model:collapsed="collapsed"
-      :trigger="null"
-      collapsible
-      style="background: #fff"
-    >
+    <a-layout-sider v-model:collapsed="collapsed" :trigger="null" collapsible style="background: #fff">
       <div class="logo">
-        <img
-          v-if="!collapsed"
-          src="../assets/images/logo/logo_admin.png"
-          width="200"
-          height="60"
-        />
-        <img
-          v-else
-          src="../assets/images/logo/logo.png"
-          width="50"
-          height="50"
-        />
+        <img v-if="!collapsed" src="../assets/images/logo/logo_admin.png" width="200" height="60" alt="logo"/>
+        <img v-else src="../assets/images/logo/logo.png" width="50" height="50" alt="logo"/>
       </div>
-      <a-menu
-        v-model:selectedKeys="selectedKeys"
-        theme="light"
-        mode="inline"
-        @click="menuClick"
-      >
+      <a-menu v-model:selectedKeys="selectedKeys" theme="light" mode="inline" @click="menuClick">
         <a-menu-item :key="item.path" v-for="item in extendRoutes">
           <DesktopOutlined/>
           <span>{{ item.meta?.title }}</span>
@@ -79,26 +58,10 @@ export default class AdminLayout extends Vue {
     </a-layout-sider>
     <a-layout>
       <a-layout-header style="background: rgb(63, 76, 147); padding-left: 16px">
-        <MenuUnfoldOutlined
-          :style="{ color: '#ffffff', fontSize: '18px' }"
-          v-if="collapsed"
-          @click="() => (collapsed = !collapsed)"
-        />
-        <MenuFoldOutlined
-          v-else
-          :style="{ color: '#ffffff', fontSize: '18px' }"
-          @click="() => (collapsed = !collapsed)"
-        />
+        <MenuUnfoldOutlined class="icon" v-if="collapsed" @click="() => (collapsed = !collapsed)"/>
+        <MenuFoldOutlined v-else class="icon" @click="() => (collapsed = !collapsed)"/>
       </a-layout-header>
-      <a-layout-content
-        :style="{
-          margin: '8px',
-          padding: '5px',
-          background: '#fff',
-          minHeight: '280px',
-          maxHeight: '850px'
-        }"
-      >
+      <a-layout-content class="layout-content">
         <router-view/>
       </a-layout-content>
     </a-layout>
@@ -108,12 +71,27 @@ export default class AdminLayout extends Vue {
 <style scoped lang="less">
 .container {
   min-height: 100vh;
+
+  .layout-content {
+    overflow-y: auto;
+    margin: 8px;
+    padding: 5px;
+    background: #fff;
+    min-height: 280px;
+    max-height: 850px;
+  }
+
+  .icon {
+    font-size: 18px;
+    color: #ffffff;
+  }
+  .logo {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
-.logo {
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+
 </style>

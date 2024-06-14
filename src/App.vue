@@ -1,13 +1,10 @@
 <template>
-  <a-config-provider
-    :locale="locale"
-    :theme="{
-      token: {
+  <a-config-provider :locale="locale" componentSize="small" :theme="{
+     token: {
         colorPrimary: '#293891',
-      },
-    }"
-  >
-    <div :class="{'ow_content':inner}">
+     },
+    }">
+    <div :class="{'content':inner}">
       <router-view/>
     </div>
   </a-config-provider>
@@ -45,7 +42,7 @@ export default class App extends Vue {
 }
 </script>
 <style lang="less" scoped>
-.ow_content {
+.content {
   padding: 5px;
   background: #fff;
 }
