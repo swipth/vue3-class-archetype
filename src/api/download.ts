@@ -46,22 +46,19 @@ const fileDownload = (url: string, params: Record<string, unknown>, method: Meth
     headers: {
       Accept: "application/json", "Content-Type": "application/json; charset=utf-8", Authorization: handleAxiosResponseAction.getToken()
     },
-    responseType:
-      "blob",
-    timeout:
-      120000,
-    onDownloadProgress:
-      (e: any) => {
-        if (e.lengthComputable) {
-          modal.update({content: +"Current Progress ：" + ((e.loaded / e?.total) * 100).toFixed(2) + "%"});
-          if (e.loaded === e.total) {
-            NProgress.set(e.loaded / e.total);
-            modal.destroy();
-          }
+    responseType: "blob",
+    timeout: 120000,
+    onDownloadProgress: function ({loaded, total, download = true}) {
+      // Do whatever you want with the Axios progress event
+      if (total && download) {
+        modal.update({content: +"Current Progress ：" + ((loaded / total) * 100).toFixed(2) + "%"});
+        if (loaded === total) {
+          NProgress.set(loaded / total);
+          modal.destroy();
         }
-      },
+      }
+    },
   })
-    ;
 };
 const convertRes2Blob = async (response: AxiosResponse, name?: string) => {
   let fileName = "";
