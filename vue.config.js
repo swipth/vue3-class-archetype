@@ -38,6 +38,8 @@ module.exports = defineConfig({
       args[0].title = "南京药石科技股份有限公司";
       return args;
     });
+    config.output.filename('[name].[contenthash].js').end();
+    config.output.chunkFilename('[name].[contenthash].js').end();
   },
   css: {
     loaderOptions: {
