@@ -42,7 +42,7 @@ axiosRetry(axios, {
     return error.message.includes("timeout") || error.message.includes("Network Error");
   },
 });
-export const ajax = ({url, method = "GET", params = {}, data = {}, baseURL = undefined, headers = {}, responseType = "json"}: AxiosRequestConfig): Promise<AjaxRes> => {
+export const ajax = ({url, method = "GET", params = {}, data, baseURL, headers = {}, responseType = "json"}: AxiosRequestConfig): Promise<AjaxRes> => {
   return new Promise((resolve, reject) => {
     axios({
       url, method, params, baseURL, headers, data, withCredentials: true, auth: networkKey.auth, responseType, validateStatus: function (status: number) {
