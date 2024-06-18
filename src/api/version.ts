@@ -29,9 +29,10 @@ export function versionCheck(callback?: () => void) {
 
 export function refreshPage() {
   removeErrorModalNumber();
-  const url = new URL(location.href);
-  if (url.searchParams.get("t")) location.reload(); else url.searchParams.append("t", String(Date.now()));
-  location.href = url.href;
+  window.$wujie?.props?.reload();
+  // const url = new URL(location.href);
+  // if (url.searchParams.get("t")) location.reload(); else url.searchParams.append("t", String(Date.now()));
+  // location.href = url.href;
 }
 
 function getUrlQuery(params: string) {
