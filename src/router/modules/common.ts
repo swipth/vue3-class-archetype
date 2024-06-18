@@ -24,9 +24,9 @@ export const commonRoutes: Array<RouteRecordRaw> = [
       },
     ]
   },
-  {
-    name: "NotFound",
-    path: "/:pathMatch(.*)*",
-    redirect: "/exception/404",
-  },
+  // {
+  //   name: "NotFound",
+  //   path: "/:pathMatch(.*)*",
+  //   redirect: "/exception/404",
+  // },
 ];
